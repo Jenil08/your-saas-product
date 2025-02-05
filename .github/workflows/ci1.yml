@@ -1,26 +1,25 @@
-name: CI Pipeline
+name: Node.js CI
+
 on: [push, pull_request]
+
 jobs:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
+    - name: Checkout Repository
+      uses: actions/checkout@v3
 
-      - name: Set Up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '18'
+    - name: Debug Directory Structure
+      run: |
+        pwd
+        ls -la /home/runner/work/your-saas-product
+        ls -la /home/runner/work/your-saas-product/your-saas-product
 
-     - name: Checkout repository
-       uses: actions/checkout@v3
+    - name: Install Dependencies
+      run: npm install
+      working-directory: ./your-saas-product/your-saas-product
 
-     - name: Install dependencies
-       working-directory: ./your-saas-product
-       run: npm install
-
-     - name: Checkout repository
-       uses: actions/checkout@v3
-  
-      - name: Install Dependencies
-        run: npm install
-
+    - name: Display NPM Error Log
+      if: failure()
+      run: cat /home/runner/.npm/_logs/*-debug-0.log
