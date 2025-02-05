@@ -7,19 +7,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    # Step 1: Checkout Repository
     - name: Checkout Repository
       uses: actions/checkout@v3
 
+    # Step 2: Debug Directory Structure
     - name: Debug Directory Structure
       run: |
         pwd
         ls -la /home/runner/work/your-saas-product
         ls -la /home/runner/work/your-saas-product/your-saas-product
 
+    # Step 3: Install Dependencies
     - name: Install Dependencies
       run: npm install
-      working-directory: ./your-saas-product/your-saas-product
+      working-directory: ./your-saas-product
 
+    # Step 4: Display NPM Error Log if npm install fails
     - name: Display NPM Error Log
       if: failure()
-      run: cat /home/runner/.npm/_logs/*-debug-0.log
+      run: |
+        find /home/runner/.npm/_logs/
+        cat /home/runner/.npm/_logs/*-debug-0.log || echo "No log file found."
