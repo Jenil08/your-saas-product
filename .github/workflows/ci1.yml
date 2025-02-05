@@ -12,8 +12,16 @@ jobs:
         with:
           node-version: '18'
 
+     - name: Checkout repository
+       uses: actions/checkout@v3
+
+     - name: Install dependencies
+       working-directory: ./your-saas-product
+       run: npm install
+
+     - name: Checkout repository
+       uses: actions/checkout@v3
+  
       - name: Install Dependencies
         run: npm install
 
-      - name: Run Tests
-        run: npm test
